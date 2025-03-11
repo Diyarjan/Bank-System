@@ -1,0 +1,18 @@
+PORT: "8080"
+
+DB:
+  Host: "localhost"
+  Port: "5436"
+  UserName: "postgres"
+  Password: "postgres"
+  DBName: "postgres"
+  SSLMode: "disable"
+
+REDIS:
+  Host: "localhost"
+  Port: "7379"
+  Password: ""
+  DB: 1
+
+KAFKA:
+  Brokers: "localhost:9092"
