@@ -8,14 +8,14 @@ import (
 )
 
 func (h *Handler) createAccount(c *gin.Context) {
-	var account BankSystem.ToMakeAccount
+	var account BankSystem.ToMakeAccount // CreateAccount
 
 	if err := c.ShouldBindJSON(&account); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"invalid Input structure ": err.Error()})
 		return
 	}
 
-	accountID, err := h.services.Control.CreateAccount(account)
+	accountID, err := h.services.Control.CreateAccount(account) // ManageAccount
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error from create account": err.Error()})
@@ -26,7 +26,6 @@ func (h *Handler) createAccount(c *gin.Context) {
 }
 
 func (h *Handler) deleteAccount(c *gin.Context) {
-
 	accountID, err := strconv.Atoi(c.Param("account_id"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"invalid account_id": err.Error()})
@@ -34,14 +33,15 @@ func (h *Handler) deleteAccount(c *gin.Context) {
 
 	if err = h.services.Control.DeleteAccount(accountID); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error from delete account": err.Error()})
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"deleted account id - ": accountID})
-
 }
 
 func (h *Handler) getAccountByID(c *gin.Context) {
 	accountID, err := strconv.Atoi(c.Param("account_id"))
+
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"invalid account_id": err.Error()})
 	}
@@ -53,7 +53,6 @@ func (h *Handler) getAccountByID(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"account": account})
-
 }
 
 func (h *Handler) getAllAccounts(c *gin.Context) {
@@ -65,5 +64,4 @@ func (h *Handler) getAllAccounts(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, accounts)
-
 }

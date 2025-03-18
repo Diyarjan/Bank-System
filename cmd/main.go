@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Diyarjan/BankSystem/third_party/cache"
+	"github.com/Diyarjan/BankSystem/third_party/cachePart"
 	"github.com/Diyarjan/BankSystem/third_party/kafkaPart"
 	_ "github.com/lib/pq" // PostgreSQL драйвер
 
@@ -39,8 +39,8 @@ func main() {
 		log.Fatalf("Error initializing Postgres %s", err)
 	}
 
-	// init cache connection
-	cacheClient, err := cache.NewRedis(cache.Params{
+	// init cachePart connection
+	cacheClient, err := cachePart.NewRedis(cachePart.Params{
 		Host:     viper.GetString("REDIS.Host"),
 		Port:     viper.GetString("REDIS.Port"),
 		Password: viper.GetString("REDIS.Password"),
@@ -50,10 +50,11 @@ func main() {
 		log.Fatalf("Error initializing Redis %s", err)
 	}
 
+	//init KafkaProducer connection
 	producer := kafkaPart.NewProducer(viper.GetString("KAFKA.Brokers"))
 
 	repos := repository.NewRepository(dbClient, cacheClient)
-	services := service.NewService(repos, producer)
+	services := service.NewService(repos, producer, cacheClient)
 	handlers := handler.NewHandler(services)
 
 	srv := new(server.Server)

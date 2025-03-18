@@ -9,3 +9,5 @@ const (
 	AccountsTable     = "accounts"
 	TransactionsTable = "transactions"
 )
+
+const IdListKey = "all_account_ids"

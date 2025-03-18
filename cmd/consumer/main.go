@@ -4,7 +4,7 @@ import (
 	"github.com/Diyarjan/BankSystem/constants"
 	"github.com/Diyarjan/BankSystem/pkg/repository/db"
 	"github.com/Diyarjan/BankSystem/pkg/repository/listeners"
-	"github.com/Diyarjan/BankSystem/third_party/cache"
+	"github.com/Diyarjan/BankSystem/third_party/cachePart"
 	"github.com/Diyarjan/BankSystem/third_party/database"
 	"github.com/Diyarjan/BankSystem/third_party/kafkaPart"
 	"github.com/joho/godotenv"
@@ -37,8 +37,8 @@ func main() {
 		log.Fatalf("Error initializing Postgres %s", err)
 	}
 
-	// init cache connection
-	cacheClient, err := cache.NewRedis(cache.Params{
+	// init cachePart connection
+	cacheClient, err := cachePart.NewRedis(cachePart.Params{
 		Host:     viper.GetString("REDIS.Host"),
 		Port:     viper.GetString("REDIS.Port"),
 		Password: viper.GetString("REDIS.Password"),

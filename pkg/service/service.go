@@ -4,6 +4,7 @@ import (
 	"github.com/Diyarjan/BankSystem"
 	"github.com/Diyarjan/BankSystem/pkg/repository"
 	"github.com/Diyarjan/BankSystem/third_party/kafkaPart"
+	"github.com/redis/go-redis/v9"
 )
 
 type Control interface {
@@ -25,9 +26,9 @@ type Service struct {
 	Transaction
 }
 
-func NewService(repos *repository.Repository, producer *kafkaPart.Producer) *Service {
+func NewService(repos *repository.Repository, producer *kafkaPart.Producer, rdsClient *redis.Client) *Service {
 	return &Service{
-		Control:     NewControlService(repos.Control),
+		Control:     NewControlService(repos.Control, rdsClient),
 		Transaction: NewTransactionService(repos.Transaction, producer),
 	}
 }

@@ -14,7 +14,7 @@ services:
       - '5436:5432'
 
   cache:
-    container_name: redis-cache
+    container_name: redis-cachePart
     image: redis:6.2-alpine
     restart: always
     ports:

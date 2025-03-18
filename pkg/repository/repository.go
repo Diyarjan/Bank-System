@@ -8,7 +8,7 @@ import (
 )
 
 type Control interface {
-	CreateAccount(account BankSystem.ToMakeAccount) (int, error)
+	CreateAccount(account BankSystem.ToMakeAccount) (BankSystem.Account, error)
 	DeleteAccount(accountID int) error
 	GetAccountByID(accountID int) (BankSystem.Account, error)
 	GetAllAccounts() ([]BankSystem.Account, error)

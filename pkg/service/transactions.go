@@ -87,7 +87,7 @@ func (s *TransactionService) TransferFunds(transferStruct BankSystem.Transfer) (
 		return 0, fmt.Errorf("Transfer amount is big from your balance: %f ", account.Balance)
 	}
 	oldBalance := account.Balance
-	// Check validation to account
+	// Check validation to account and return account data
 	account, err = s.repo.CheckValidateAccount(transferStruct.ToAccountID)
 	if err != nil {
 		return 0, err
@@ -99,7 +99,7 @@ func (s *TransactionService) TransferFunds(transferStruct BankSystem.Transfer) (
 		return 0, err
 	}
 
-	if err := s.producer.SendMessage([]byte(message), constants.Transfer); err != nil {
+	if err = s.producer.SendMessage([]byte(message), constants.Transfer); err != nil {
 		log.Printf("Field send message %s", string(message))
 		return 0, err
 	}

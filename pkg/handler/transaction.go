@@ -81,7 +81,7 @@ func (h *Handler) withdrawFromAccount(c *gin.Context) {
 	c.JSON(http.StatusOK, fmt.Sprintf("account %d withdraw successfully", accountID))
 }
 
-func (h *Handler) transferFunds(c *gin.Context) {
+func (h *Handler) transferFunds(c *gin.Context) { // transferToAccount
 	var transfer BankSystem.Transfer
 
 	fromAccountID, err := strconv.Atoi(c.Param("account_id"))

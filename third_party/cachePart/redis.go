@@ -1,4 +1,4 @@
-package cache
+package cachePart
 
 import (
 	"context"
@@ -12,7 +12,7 @@ type Params struct {
 	DB       int
 }
 
-// NewRedis - establishing cache client connection with cache server
+// NewRedis - establishing cachePart client connection with cachePart server
 func NewRedis(cfg Params) (*redis.Client, error) {
 	client := redis.NewClient(&redis.Options{
 		Addr:     cfg.Host + ":" + cfg.Port,
